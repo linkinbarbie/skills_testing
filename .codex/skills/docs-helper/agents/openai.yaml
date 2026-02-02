@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Helper"
+  short_description: "Summarize README and explain repo docs"
+  default_prompt: "Use -helper to summarize README.md and SKILLS.md."
