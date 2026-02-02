@@ -44,3 +44,6 @@ Example prompt:
 ## Notes
 - Skill frontmatter `description` is the main trigger. Make it specific and complete.
 - Keep `SKILL.md` concise. Put heavy details in `references/`.
+
+## Why skills help you
+Skills make Codex act like a specialist by using a prepared playbook. This gives you faster answers, more consistent steps, and fewer mistakes because the process is written down and reused.
