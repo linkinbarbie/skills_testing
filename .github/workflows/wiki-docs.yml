@@ -1,0 +1,39 @@
+name: Wiki Docs
+
+on:
+  push:
+
+jobs:
+  generate-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate wiki markdown
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4o-mini
+          OUTPUT_PATH: generated/Repo-Docs.md
+        run: |
+          python3 scripts/generate_wiki_docs.py
+
+      - name: Push to GitHub Wiki
+        env:
+          WIKI_TOKEN: ${{ secrets.WIKI_TOKEN }}
+        run: |
+          if [ -z "$WIKI_TOKEN" ]; then
+            echo "WIKI_TOKEN secret is required to push to the wiki."
+            exit 1
+          fi
+          git clone "https://x-access-token:${WIKI_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git" wiki
+          cp generated/Repo-Docs.md wiki/Repo-Docs.md
+          cd wiki
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add Repo-Docs.md
+          if git diff --cached --quiet; then
+            echo "No wiki changes to commit."
+            exit 0
+          fi
+          git commit -m "Update repo docs"
+          git push
