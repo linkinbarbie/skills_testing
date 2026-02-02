@@ -50,3 +50,5 @@ Skills make Codex act like a specialist by using a prepared playbook. This gives
 
 Example:
 If you ask “Why is CI failing?”, Codex loads the `qa-triage` skill and follows its steps instead of guessing.
+
+If you ask “Summarize README.md and explain how SKILLS.md works,” Codex loads the `docs-helper` skill and summarizes the docs.
