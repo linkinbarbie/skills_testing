@@ -47,3 +47,6 @@ Example prompt:
 
 ## Why skills help you
 Skills make Codex act like a specialist by using a prepared playbook. This gives you faster answers, more consistent steps, and fewer mistakes because the process is written down and reused.
+
+Example:
+If you ask “Why is CI failing?”, Codex loads the `qa-triage` skill and follows its steps instead of guessing.
