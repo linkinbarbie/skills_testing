@@ -11,6 +11,8 @@ A small demo repo showing how `SKILLS.md` and `.codex/skills/` work together.
   - Example reference file used by the skill.
 - `.github/workflows/ci.yml`
   - Minimal GitHub Actions workflow.
+- `tests/api/test_users.py`
+  - Simple smoke test used to validate the QA triage skill commands.
 
 ## How skills work
 Skills are not “run” like scripts. They are guidance documents that a Codex agent loads when a user request matches the skill’s description.
