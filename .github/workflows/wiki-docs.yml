@@ -2,6 +2,11 @@ name: Wiki Docs
 
 on:
   push:
+    paths:
+      - "README.md"
+      - "SKILLS.md"
+      - ".codex/skills/**"
+      - "scripts/generate_wiki_docs.py"
 
 jobs:
   generate-wiki:
