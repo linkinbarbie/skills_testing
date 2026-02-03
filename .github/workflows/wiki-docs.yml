@@ -21,6 +21,7 @@ jobs:
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.n8n }}
+          model: gpt-5-mini
           prompt: |
             Use $docs-helper to write a concise technical wiki page for this repo.
             Use short headings and bullet points.
