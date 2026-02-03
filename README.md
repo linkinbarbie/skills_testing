@@ -52,3 +52,8 @@ Example:
 If you ask “Why is CI failing?”, Codex loads the `qa-triage` skill and follows its steps instead of guessing.
 
 If you ask “Summarize README.md and explain how SKILLS.md works,” Codex loads the `docs-helper` skill and summarizes the docs.
+
+## Change Log
+- Added a GitHub Actions workflow that generates a one-paragraph wiki summary using the Codex action.
+- Configured the workflow to run manually and on docs/skills changes only.
+- Switched the wiki push to use a PAT secret named `GIT`.
