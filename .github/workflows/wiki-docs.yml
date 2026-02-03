@@ -30,7 +30,7 @@ jobs:
 
       - name: Push to GitHub Wiki
         env:
-          WIKI_TOKEN: ${{ secrets.WIKI_TOKEN }}
+          WIKI_TOKEN: ${{ secrets.git }}
         run: |
           if [ -z "$WIKI_TOKEN" ]; then
             echo "WIKI_TOKEN secret is required to push to the wiki."
