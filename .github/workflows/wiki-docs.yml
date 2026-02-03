@@ -7,7 +7,6 @@ on:
       - "README.md"
       - "SKILLS.md"
       - ".codex/skills/**"
-      - "scripts/generate_wiki_docs.py"
 
 jobs:
   generate-wiki:
@@ -16,12 +15,15 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate wiki markdown
-        env:
-          OPENAI_API_KEY: ${{ secrets.n8n }}
-          OPENAI_MODEL: gpt-4o-mini
-          OUTPUT_PATH: generated/Repo-Docs.md
-        run: |
-          python3 scripts/generate_wiki_docs.py
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.n8n }}
+          prompt: |
+            Use $docs-helper to write a concise technical wiki page for this repo.
+            Use short headings and bullet points.
+            Do not include raw file dumps.
+            Keep it under 400 words.
+          output-file: generated/Repo-Docs.md
 
       - name: Push to GitHub Wiki
         env:
