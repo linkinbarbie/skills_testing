@@ -23,10 +23,9 @@ jobs:
           openai-api-key: ${{ secrets.n8n }}
           model: gpt-5-mini
           prompt: |
-            Use $docs-helper to write a concise technical wiki page for this repo.
-            Use short headings and bullet points.
-            Do not include raw file dumps.
-            Keep it under 400 words.
+            Use $docs-helper to write one short paragraph for this repo's wiki.
+            The paragraph should explain what the repo does and how skills work here.
+            Do not include headings, bullet points, or raw file dumps.
           output-file: generated/Repo-Docs.md
 
       - name: Push to GitHub Wiki
