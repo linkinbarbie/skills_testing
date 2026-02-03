@@ -11,7 +11,7 @@ jobs:
 
       - name: Generate wiki markdown
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.n8n }}
           OPENAI_MODEL: gpt-4o-mini
           OUTPUT_PATH: generated/Repo-Docs.md
         run: |
