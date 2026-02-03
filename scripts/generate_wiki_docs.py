@@ -1,6 +1,8 @@
 import json
 import os
 import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -45,18 +47,36 @@ def call_openai(api_key: str, model: str, prompt: str, max_output_tokens: int) -
         "max_output_tokens": max_output_tokens,
     }
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        url,
-        data=data,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        body = resp.read().decode("utf-8")
-    response = json.loads(body)
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+
+    attempts = 5
+    backoff = 2.0
+    last_error = None
+    for i in range(attempts):
+        req = urllib.request.Request(
+            url,
+            data=data,
+            headers=headers,
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                body = resp.read().decode("utf-8")
+            response = json.loads(body)
+            break
+        except urllib.error.HTTPError as exc:
+            last_error = exc
+            if exc.code == 429 or 500 <= exc.code < 600:
+                time.sleep(backoff)
+                backoff *= 2
+                continue
+            raise
+    else:
+        raise last_error
 
     if isinstance(response, dict) and "output_text" in response:
         return response["output_text"]
