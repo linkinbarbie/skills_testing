@@ -1,0 +1,4 @@
+interface:
+  display_name: "C++ Trading Interview"
+  short_description: "Prep for C++ trading platform interviews"
+  default_prompt: "Use -trading-interview to run a fast trading-platform interview drill."

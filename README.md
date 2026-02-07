@@ -57,3 +57,4 @@ If you ask “Summarize README.md and explain how SKILLS.md works,” Codex load
 - Added a GitHub Actions workflow that generates a one-paragraph wiki summary using the Codex action.
 - Configured the workflow to run manually and on docs/skills changes only.
 - Switched the wiki push to use a PAT secret named `GIT`.
+- Added `cxx-trading-interview` skill for C++ trading-platform interview prep.
