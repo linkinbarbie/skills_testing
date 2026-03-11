@@ -142,3 +142,69 @@ Only add write scopes if you actually need create/update operations.
     npm -v
     npx -v
     ```
+
+## 7. Node 24 + MCP stable run path (recommended for your setup)
+
+If Node 24 installed via `nvm` can run with direct loader checks but `node -v` sometimes fails, pin MCP to a stable Node 24 runtime path.
+
+Run this in Ubuntu WSL:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+nvm install 24
+nvm use 24
+nvm alias default 24
+hash -r
+
+which node
+which npx
+node -v
+npm -v
+npx -v
+```
+
+Expected: all version commands succeed and paths point to `$HOME/.nvm/...`, not `/mnt/c/...`.
+
+Get exact `npx` path:
+
+```bash
+command -v npx
+```
+
+Use that absolute path in `.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "ado": {
+      "type": "stdio",
+      "command": "/home/<your-user>/.nvm/versions/node/v24.x.x/bin/npx",
+      "args": [
+        "-y",
+        "@azure-devops/mcp",
+        "${input:ado_org}",
+        "--authentication",
+        "envvar",
+        "-d",
+        "core",
+        "-d",
+        "work",
+        "-d",
+        "work-items",
+        "-d",
+        "repositories"
+      ]
+    }
+  }
+}
+```
+
+After updating config:
+
+```bash
+code .
+```
+
+Then restart VS Code or reload the window so MCP picks up the new command path.
