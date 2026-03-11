@@ -94,6 +94,32 @@ Only add write scopes if you actually need create/update operations.
     npm -v
     npx -v
     ```
+  - If you see `WSL2 is not supported on your current machine configuration` in a VM, run in Windows PowerShell (Admin):
+    ```powershell
+    systeminfo | Select-String "Hyper-V Requirements"
+    Get-ComputerInfo -Property "HyperV*"
+
+    dism /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    dism /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+    dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /all /norestart
+    bcdedit /set hypervisorlaunchtype auto
+    wsl --update
+    shutdown /r /t 0
+    ```
+  - After reboot:
+    ```powershell
+    wsl --set-default-version 2
+    wsl -l -v
+    ```
+  - If it still fails, this is usually an Azure VM configuration blocker. Confirm:
+    - VM size supports nested virtualization
+    - VM is Generation 2
+    - Nested virtualization is enabled by platform/policy
+    - Organization policy allows Hyper-V in guest VM
+  - If Azure policy/size blocks WSL2, use one:
+    - Run MCP on Windows native Node (not WSL)
+    - Use a Linux VM/devcontainer for MCP
+    - Keep WSL1 only for non-Node-critical tasks
 - `cannot exec binary file` when running `node -v`:
   - Check binary and architecture:
     ```bash
