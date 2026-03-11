@@ -208,3 +208,44 @@ code .
 ```
 
 Then restart VS Code or reload the window so MCP picks up the new command path.
+
+## 8. If Node 24 only works via interpreter, force source build
+
+If `node -v` fails but running through the loader/interpreter works, your local Node 24 install may be a bad prebuilt binary for this environment.
+
+Build Node 24 from source with `nvm`:
+
+```bash
+sudo apt update
+sudo apt install -y build-essential python3 make g++
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+nvm uninstall 24
+rm -rf "$NVM_DIR/.cache"
+nvm install 24 -s
+nvm use 24
+nvm alias default 24
+hash -r
+
+node -v
+npm -v
+npx -v
+```
+
+Validate binary details:
+
+```bash
+BIN="$(which node)"
+file -L "$BIN"
+uname -m
+readelf -h "$BIN" | rg 'Class|Machine'
+readelf -l "$BIN" | rg 'interpreter|Requesting'
+```
+
+If versions now print normally, keep MCP using the absolute `npx` path from:
+
+```bash
+command -v npx
+```
