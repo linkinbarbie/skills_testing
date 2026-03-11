@@ -7,6 +7,7 @@ This repo includes VS Code MCP config at `.vscode/mcp.json`.
 - VS Code with MCP support enabled in your environment
 - Node.js + `npx` available
 - Azure DevOps Personal Access Token (PAT)
+- WSL2 (WSL1 can cause Node runtime issues for MCP tooling)
 
 ## 2. Verify Node.js and npx in Ubuntu (WSL)
 
@@ -69,6 +70,30 @@ Only add write scopes if you actually need create/update operations.
 - `npx: command not found`: install Node.js in your environment
 - Auth failures: confirm `ADO_MCP_AUTH_TOKEN` is exported in the same terminal/session VS Code uses
 - Permission errors: verify PAT scopes and org access
+- WSL version check and migration (recommended if Node exec is unstable):
+  - Check current version from Ubuntu:
+    ```bash
+    wsl.exe -l -v
+    uname -r
+    ```
+  - If distro version is `1`, switch in Windows PowerShell (Admin):
+    ```powershell
+    wsl --set-version Ubuntu 2
+    wsl --set-default-version 2
+    wsl -l -v
+    ```
+  - If conversion fails, enable required features then reboot:
+    ```powershell
+    dism /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+    dism /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    wsl --update
+    ```
+  - Re-open Ubuntu and verify runtime again:
+    ```bash
+    node -v
+    npm -v
+    npx -v
+    ```
 - `cannot exec binary file` when running `node -v`:
   - Check binary and architecture:
     ```bash
