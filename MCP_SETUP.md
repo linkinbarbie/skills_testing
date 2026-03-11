@@ -87,3 +87,18 @@ Only add write scopes if you actually need create/update operations.
     node -v
     npx -v
     ```
+  - If it still fails, run deeper diagnostics:
+    ```bash
+    type -a node
+    hash -r
+    ls -l /usr/bin/node
+    readlink -f /usr/bin/node
+    file "$(readlink -f /usr/bin/node)"
+    ldd "$(readlink -f /usr/bin/node)"
+    /usr/bin/node -v
+    "$(readlink -f /usr/bin/node)" -v
+    ```
+  - Quick interpretation:
+    - `file` not showing Linux ELF x86-64: wrong binary installed
+    - `ldd` showing missing libraries: broken runtime dependencies
+    - direct path works but `node -v` fails: shell alias/PATH/hash issue
