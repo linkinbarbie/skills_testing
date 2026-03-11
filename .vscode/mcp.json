@@ -1,0 +1,30 @@
+{
+  "inputs": [
+    {
+      "id": "ado_org",
+      "type": "promptString",
+      "description": "Azure DevOps organization name (example: contoso)"
+    }
+  ],
+  "servers": {
+    "ado": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@azure-devops/mcp",
+        "${input:ado_org}",
+        "--authentication",
+        "envvar",
+        "-d",
+        "core",
+        "-d",
+        "work",
+        "-d",
+        "work-items",
+        "-d",
+        "repositories"
+      ]
+    }
+  }
+}
