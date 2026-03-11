@@ -102,3 +102,21 @@ Only add write scopes if you actually need create/update operations.
     - `file` not showing Linux ELF x86-64: wrong binary installed
     - `ldd` showing missing libraries: broken runtime dependencies
     - direct path works but `node -v` fails: shell alias/PATH/hash issue
+  - If `ldd` shows no missing libraries but `node -v` still fails, run:
+    ```bash
+    type -a node
+    readlink -f /usr/bin/node
+    /usr/bin/node -v
+    "$(readlink -f /usr/bin/node)" -v
+    env -i PATH=/usr/bin:/bin /usr/bin/node -v
+    ```
+  - If direct execution still fails, do a clean reinstall including runtime libs:
+    ```bash
+    sudo apt purge -y nodejs npm
+    sudo apt autoremove -y
+    sudo apt install --reinstall -y libc6 libstdc++6
+    sudo apt update
+    sudo apt install -y nodejs npm
+    hash -r
+    node -v
+    ```
