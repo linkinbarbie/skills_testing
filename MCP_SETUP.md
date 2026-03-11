@@ -8,7 +8,34 @@ This repo includes VS Code MCP config at `.vscode/mcp.json`.
 - Node.js + `npx` available
 - Azure DevOps Personal Access Token (PAT)
 
-## 2. Set your PAT in the terminal session
+## 2. Verify Node.js and npx in Ubuntu (WSL)
+
+Run in your Ubuntu terminal:
+
+```bash
+node -v
+npm -v
+npx -v
+which node
+which npx
+```
+
+Expected paths should be Linux paths (for example `/usr/bin/node`), not Windows `C:` paths.
+
+Install location guidance:
+
+- For VS Code + WSL workflows, install Node.js in the Ubuntu distro
+- Do not rely on Windows `C:` Node.js for WSL MCP workflows
+
+If missing, install in Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install -y nodejs npm
+node -v && npm -v && npx -v
+```
+
+## 3. Set your PAT in the terminal session
 
 Run in your terminal before starting MCP tools:
 
@@ -19,7 +46,7 @@ export ADO_MCP_AUTH_TOKEN
 
 Optional: persist in shell profile (`~/.bashrc` or `~/.zshrc`) if your security policy allows it.
 
-## 3. Open this repo in VS Code
+## 4. Open this repo in VS Code
 
 ```bash
 code .
@@ -27,7 +54,7 @@ code .
 
 When MCP starts, it will prompt for your Azure DevOps org name (`ado_org`).
 
-## 4. Recommended PAT scopes (least privilege)
+## 5. Recommended PAT scopes (least privilege)
 
 Start with:
 
@@ -37,7 +64,7 @@ Start with:
 
 Only add write scopes if you actually need create/update operations.
 
-## 5. Troubleshooting
+## 6. Troubleshooting
 
 - `npx: command not found`: install Node.js in your environment
 - Auth failures: confirm `ADO_MCP_AUTH_TOKEN` is exported in the same terminal/session VS Code uses
