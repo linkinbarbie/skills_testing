@@ -111,6 +111,10 @@ Only add write scopes if you actually need create/update operations.
     wsl --set-default-version 2
     wsl -l -v
     ```
+  - Verify WSL2-related Windows features are enabled:
+    ```powershell
+    Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux,VirtualMachinePlatform,Microsoft-Hyper-V-All
+    ```
   - If it still fails, this is usually an Azure VM configuration blocker. Confirm:
     - VM size supports nested virtualization
     - VM is Generation 2
