@@ -120,3 +120,25 @@ Only add write scopes if you actually need create/update operations.
     hash -r
     node -v
     ```
+  - If `which node` is `/usr/bin/node` but `node -v` still says `cannot execute binary file`, run:
+    ```bash
+    /usr/bin/nodejs -v
+    sudo apt update
+    sudo apt install --reinstall -y nodejs npm
+    sudo ln -sf /usr/bin/nodejs /usr/bin/node
+    hash -r
+    /usr/bin/node -v
+    node -v
+    npm -v
+    npx -v
+    ```
+  - If `/usr/bin/nodejs -v` also fails, use `nvm` fallback:
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+    source ~/.bashrc
+    nvm install --lts
+    nvm use --lts
+    node -v
+    npm -v
+    npx -v
+    ```
