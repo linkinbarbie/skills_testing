@@ -69,3 +69,21 @@ Only add write scopes if you actually need create/update operations.
 - `npx: command not found`: install Node.js in your environment
 - Auth failures: confirm `ADO_MCP_AUTH_TOKEN` is exported in the same terminal/session VS Code uses
 - Permission errors: verify PAT scopes and org access
+- `cannot exec binary file` when running `node -v`:
+  - Check binary and architecture:
+    ```bash
+    which node
+    file /usr/bin/node
+    dpkg --print-architecture
+    uname -m
+    ```
+  - If architecture does not match or binary is invalid, reinstall in Ubuntu WSL:
+    ```bash
+    sudo apt purge -y nodejs npm
+    sudo apt autoremove -y
+    sudo apt update
+    sudo apt install -y nodejs npm
+    hash -r
+    node -v
+    npx -v
+    ```
