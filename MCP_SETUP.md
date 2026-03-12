@@ -65,7 +65,45 @@ Start with:
 
 Only add write scopes if you actually need create/update operations.
 
-## 6. Troubleshooting
+## 6. WSL1-safe setup for VS Code Copilot + ADO MCP
+
+Use this if your VM must stay on WSL1.
+
+1. Install and verify Windows Node.js (not Ubuntu WSL Node):
+
+```powershell
+node -v
+npm -v
+npx -v
+where npx
+```
+
+2. Sign in to VS Code Copilot:
+
+- Install `GitHub Copilot` and `GitHub Copilot Chat` extensions
+- Sign in with your org-approved account/license
+
+3. Set ADO token in the Windows session used by VS Code:
+
+```powershell
+setx ADO_MCP_AUTH_TOKEN "<your-ado-pat>"
+```
+
+Close and reopen VS Code after `setx`.
+
+4. Use Windows Node command in `.vscode/mcp.json`:
+
+```json
+"command": "C:\\Program Files\\nodejs\\npx.cmd"
+```
+
+5. Open repo in VS Code (Windows context) and start MCP.  
+You should be able to use:
+
+- Copilot in editor/chat
+- ADO MCP for repos, work/boards, and core project data
+
+## 7. Troubleshooting
 
 - `npx: command not found`: install Node.js in your environment
 - Auth failures: confirm `ADO_MCP_AUTH_TOKEN` is exported in the same terminal/session VS Code uses
@@ -198,7 +236,7 @@ Only add write scopes if you actually need create/update operations.
     npx -v
     ```
 
-## 7. Node 24 + MCP stable run path (recommended for your setup)
+## 8. Node 24 + MCP stable run path (recommended for your setup)
 
 If Node 24 installed via `nvm` can run with direct loader checks but `node -v` sometimes fails, pin MCP to a stable Node 24 runtime path.
 
@@ -264,7 +302,7 @@ code .
 
 Then restart VS Code or reload the window so MCP picks up the new command path.
 
-## 8. If Node 24 only works via interpreter, force source build
+## 9. If Node 24 only works via interpreter, force source build
 
 If `node -v` fails but running through the loader/interpreter works, your local Node 24 install may be a bad prebuilt binary for this environment.
 

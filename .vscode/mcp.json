@@ -9,7 +9,7 @@
   "servers": {
     "ado": {
       "type": "stdio",
-      "command": "npx",
+      "command": "C:\\Program Files\\nodejs\\npx.cmd",
       "args": [
         "-y",
         "@azure-devops/mcp",
