@@ -77,6 +77,21 @@ winget install Microsoft.VisualStudioCode -e
 winget install Git.Git -e
 ```
 
+If `winget` is not installed/allowed, use Chocolatey fallback:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+choco install -y nodejs-lts git vscode
+```
+
+If Chocolatey is blocked by policy, use direct installers:
+
+- Node LTS MSI: https://nodejs.org/en/download
+- Git for Windows: https://git-scm.com/download/win
+- VS Code: https://code.visualstudio.com/download
+
 2. Install and verify Windows Node.js (not Ubuntu WSL Node):
 
 ```powershell
