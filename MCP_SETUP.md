@@ -69,21 +69,35 @@ Only add write scopes if you actually need create/update operations.
 
 Use this if your VM must stay on WSL1.
 
-1. Install and verify Windows Node.js (not Ubuntu WSL Node):
+1. Install Windows tools (PowerShell Admin):
+
+```powershell
+winget install OpenJS.NodeJS.LTS -e
+winget install Microsoft.VisualStudioCode -e
+winget install Git.Git -e
+```
+
+2. Install and verify Windows Node.js (not Ubuntu WSL Node):
 
 ```powershell
 node -v
 npm -v
 npx -v
+git --version
 where npx
 ```
 
-2. Sign in to VS Code Copilot:
+3. Install VS Code Copilot extensions and sign in:
+
+```powershell
+code --install-extension GitHub.copilot
+code --install-extension GitHub.copilot-chat
+```
 
 - Install `GitHub Copilot` and `GitHub Copilot Chat` extensions
 - Sign in with your org-approved account/license
 
-3. Set ADO token in the Windows session used by VS Code:
+4. Set ADO token in the Windows session used by VS Code:
 
 ```powershell
 setx ADO_MCP_AUTH_TOKEN "<your-ado-pat>"
@@ -91,13 +105,13 @@ setx ADO_MCP_AUTH_TOKEN "<your-ado-pat>"
 
 Close and reopen VS Code after `setx`.
 
-4. Use Windows Node command in `.vscode/mcp.json`:
+5. Use Windows Node command in `.vscode/mcp.json`:
 
 ```json
 "command": "C:\\Program Files\\nodejs\\npx.cmd"
 ```
 
-5. Open repo in VS Code (Windows context) and start MCP.  
+6. Open repo in VS Code (Windows context) and start MCP.  
 You should be able to use:
 
 - Copilot in editor/chat
